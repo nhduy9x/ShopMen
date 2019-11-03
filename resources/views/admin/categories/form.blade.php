@@ -62,7 +62,7 @@
                                         <button type="submit" class="btn mb-1 btn-success" name="submit">Save<span class="btn-icon-right">
                                             
                                         </span>
-                                    </button><br><br>
+                                    </button><a href="" class="btn btn-danger">Cancel</a>
                                 </div>
                             </div>
                         </div>

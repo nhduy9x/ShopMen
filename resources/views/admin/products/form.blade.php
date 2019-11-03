@@ -36,10 +36,6 @@
                                             <div class="col-form">
                                                 
                                                 <input type="file" name="image[]" id="asgnmnt_file" class="form-control" onchange="fileSelected(this)" multiple/>
-
-                                            
-
-                                            
                                                 @if($errors->any())
                                                     <span class="text-danger">{{$errors->first('image')}}</span>
                                                 @endif
@@ -154,7 +150,7 @@
     									<button type="submit" class="btn mb-1 btn-success" name="submit">Save<span class="btn-icon-right">
     										
     									</span>
-    								</button><br><br>
+    								</button><a href="" class="btn btn-danger">Cancel</a>
     							</div>
     						</div>
     					</div>

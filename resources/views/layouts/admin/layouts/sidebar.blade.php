@@ -62,8 +62,8 @@
             </span>
           </a> 
           <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html">Đơn hàng</a></li>
-            <li><a href="pages/charts/morris.html">Các mã ưu đãi</a></li>
+            <li><a href="{{route('donhang')}}">Đơn hàng</a></li>
+            <li><a href="{{route('code')}}">Các mã ưu đãi</a></li>
             <li><a href="pages/charts/chartjs.html">Báo cáo</a></li>
             
           </ul>

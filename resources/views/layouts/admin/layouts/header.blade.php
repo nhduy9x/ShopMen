@@ -172,9 +172,17 @@
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                @if(empty(Auth::user()))
+                    <div class="pull-right">
+                       <a href="{{route('login')}}" class="btn btn-default btn-flat">Sign in</a>
+                 
                 </div>
+                @else
+                  <div class="pull-right">
+                       <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                @endif
+                
               </li>
             </ul>
           </li>

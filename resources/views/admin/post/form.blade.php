@@ -31,7 +31,7 @@
                                         </div>
                                         <div style="width: 100%;">
                                             <label class="col-form-label">image</label>
-                                            <input type="hidden" name="anh" value="">
+                                            <input type="hidden" name="anh" value="{{$post->image}}">
                                             <div class="col-form">
                                                 
                                                 <input type="file" name="images" id="asgnmnt_file" class="form-control" onchange="fileSelected(this)" >
@@ -73,7 +73,7 @@
                                     <div class="col-sm-4">
                                         <div style="width: 100%;">
                                             <div class="col-form">
-                                                <img id="asgnmnt_file_img" src="{{asset(isset($post->images)?$post->images:'img/default.jpg')}}" width="355px" height="205px" >
+                                                <img id="asgnmnt_file_img" src="{{asset(isset($post->image)?$post->image:'img/default.jpg')}}" width="355px" height="205px" >
                                              </div>
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
     									<button type="submit" class="btn mb-1 btn-success" name="submit">Save<span class="btn-icon-right">
     										
     									</span>
-    								</button><br><br>
+    								</button><a href="" class="btn btn-danger">Cancel</a>
     							</div>
     						</div>
     					</div>

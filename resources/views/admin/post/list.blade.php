@@ -20,7 +20,7 @@
                     <th>image</th>
                     <th>
                      <a href="{{route('add.post')}}" class="btn btn-app">
-                      <i class="fa fa-plus-square"></i> Them moi danh muc</a>
+                      <i class="fa fa-plus-square"></i> Them moi bài viết</a>
                     </th>
                   </tr>
                   </thead>
