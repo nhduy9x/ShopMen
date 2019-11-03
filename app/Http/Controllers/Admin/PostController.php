@@ -55,7 +55,7 @@ class PostController extends Controller
         }else if(isset($request->anh)){
          $model->image=$request->anh;
         }else{
-           return redirect(route('add.post'))->withErrors([
+           return redirect()->back()->withErrors([
             'images' => 'Vui lòng chọn'
             ]); 
         }

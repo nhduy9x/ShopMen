@@ -19,10 +19,10 @@ Route::get('dashboard', function () {
 });
 Route::get('don-hang', function () {
     return view('admin.orders.list');
-});
+})->name('donhang');
 Route::get('code', function () {
     return view('admin.orders.code');
-});
+})->name('code');
 Route::get('login','Auth\LoginController@getLogin')->name('login');
 Route::post('login','Auth\LoginController@postLogin');
 Route::get('logout','Auth\LoginController@logout')->name('logout');

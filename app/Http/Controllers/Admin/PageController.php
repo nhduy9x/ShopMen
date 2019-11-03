@@ -52,12 +52,8 @@ class PageController extends Controller
             $model->image =$file->move("img/uploads/users",$filename);
 
             // $model->image=$request->file('images')->store('img/uploads');
-        }else if(isset($request->anh)){
+        }else {
          $model->image=$request->anh;
-        }else{
-           return redirect(route('add.page'))->withErrors([
-            'images' => 'Vui lòng chọn'
-            ]); 
         }
         
         $model->slug=str::slug($request->title.'-'.microtime());
