@@ -51,7 +51,10 @@ Route::post('find-password','Auth\ResetPasswordController@postfindpass');
 Route::get('rest-password/{id}','Auth\ResetPasswordController@rest')->name('rest.pass');
 Route::post('rest-password/{id}','Auth\ResetPasswordController@postRest');
 Route::get('password-success/{id}','Auth\ResetPasswordController@PassSuccess')->name('pass.success');
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'shop-men/admin'],function(){
+	Route::get('/',function () {
+    return view('admin.index');
+	});
 	Route::group(['prefix'=>'cate'],function(){
 		Route::get('list','Admin\CateProductController@list')->name('list.cate');
 		Route::get('add','Admin\CateProductController@add')->name('add.cate');
