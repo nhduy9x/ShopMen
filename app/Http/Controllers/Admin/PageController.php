@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\Catepage;
-use App\Http\Requests\ClassPostRequest;
+use App\Http\Requests\PageRequest;
 use Illuminate\Support\Str;
 class PageController extends Controller
 {
@@ -30,7 +30,8 @@ class PageController extends Controller
         $class->delete();
         return redirect(route('list.page'));
     }
-    public function save(ClassPostRequest $request){
+    public function save(PageRequest $request){
+        // dd($request->all());
     	if (isset($request->id)) {
     		$model=Page::find($request->id);
     	}else{

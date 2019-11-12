@@ -32,47 +32,53 @@
                                         </div>
                                         <div style="width: 100%;">
                                             <label class="col-form-label">image</label>
-                                            <input type="hidden" name="anh" value="{{$product->images}}">
+                                            <input type="hidden" name="anh" value="{{$product->img}}">
                                             <div class="col-form">
                                                 
-                                                <input type="file" name="image[]" id="asgnmnt_file" class="form-control" onchange="fileSelected(this)" multiple/>
-                                                @if($errors->any())
-                                                    <span class="text-danger">{{$errors->first('image')}}</span>
+                                                <input type="file" name="image" id="asgnmnt_file" class="form-control" onchange="fileSelected(this)" >
+                                                @if(session('image'))
+                                                    <span class="text-danger">{{session('image')}}</span>
                                                 @endif
                                             </div>
                                         </div>
                                         <div style="width: 100%;">
-                                            <label class="col-form-label">Price</label>
+                                            <label class="col-form-label">Nguồn hàng</label>
                                             <div class="col-form">
-                                                <input class="form-control is-valid" id="price" name="price" type="number" value="{{$product->price}}">
-                                                
+                                                <input class="form-control is-valid"  id="stocks" name="source" type="type" value="{{$product->source}}">
                                                 @if(count($errors)>0)
-                                                    <span class="text-danger">{{$errors->first('price')}}</span>
-                                                @endif 
+                                                            <span class="text-danger">{{$errors->first('source')}}</span>
+                                                        @endif
                                             </div>
-                                           
                                         </div>
                                         <div style="width: 100%;">
-                                            <label class="col-form-label">sale_percent</label>
+                                            <label class="col-form-label">Danh mục</label>
                                             <div class="col-form">
-                                                <input class="form-control is-valid" id="sale_percent" name="sale_percent" type="number" value="{{$product->sale_percent}}">
-                                                
-                                                    
+                                                <select name="category_id" class="form-control">
+                                                    <option value="">--chon--</option>
+                                                        @foreach ($cates as $item)
+
+                                                            <option 
+                                                                @if($item->id == $product->category_id)
+                                                                selected
+                                                                @endif
+                                                                value="{{$item->id}}">{{$item->name}}</option>
+                                                        @endforeach
+                                                </select>
+                                                @if(count($errors)>0)
+                                                            <span class="text-danger">{{$errors->first('category_id')}}</span>
+                                                        @endif
                                             </div>
-                                            
                                         </div>
-                                       
-                                        
                                         
                                     </div>
                                     <div class="col-sm-6">
                                         <div style="width: 100%;">
                                             
                                             <div class="col-form">
-                                                <img id="asgnmnt_file_img" src="@if($product->images == "") 
+                                                <img id="asgnmnt_file_img" src="@if($product->img == "") 
                                                         {{asset('img/default.jpg')}} 
                                                     @else 
-                                                        {{asset($product->images)}} 
+                                                        {{asset($product->img)}} 
                                                     @endif" width="355px" height="235px"  
                                             >
                                                 
@@ -81,54 +87,17 @@
                                       
                                         
                                     </div>
+
     								
     							</div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Danh mục</label>
-                                    <div class="col-sm-12">
-                                        <select name="category_id" class="form-control">
-                                            <option value="">--chon--</option>
-                                                @foreach ($cates as $item)
-
-                                                    <option 
-                                                        @if($item->id == $product->category_id)
-                                                        selected
-                                                        @endif
-                                                        value="{{$item->id}}">{{$item->name}}</option>
-                                                @endforeach
-                                        </select>
-                                        @if(count($errors)>0)
-                                                    <span class="text-danger">{{$errors->first('category_id')}}</span>
-                                                @endif
-                                    </div>
-                                    
-                                </div>
-    							
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">số lượng</label>
-                                    <div class="col-sm-12">
-                                        <input class="form-control is-valid"  id="stocks" name="stocks" type="number" value="{{$product->stocks}}">
-                                        @if(count($errors)>0)
-                                                    <span class="text-danger">{{$errors->first('stocks')}}</span>
-                                                @endif
-                                    </div>
-                                    
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Nguồn hàng</label>
-                                    <div class="col-sm-12">
-                                        <input class="form-control is-valid"  id="stocks" name="source" type="type" value="{{$product->source}}">
-                                        @if(count($errors)>0)
-                                                    <span class="text-danger">{{$errors->first('source')}}</span>
-                                                @endif
-                                    </div>
-                                    
-                                </div>
-                                <div class="form-group row">
                                   <label class="col-sm-2 col-form-label">Mô Tả ngắn</label>
                                   <div class="col-sm-12">
                                   <textarea class="form-control" rows="3" name="short_desc">{!! $product->short_desc !!}</textarea>
+                                  @if(count($errors)>0)
+                                                    <span class="text-danger">{{$errors->first('short_desc')}}</span>
+                                       @endif
                                   </div>
                                 </div>
     							<div class="form-group row">

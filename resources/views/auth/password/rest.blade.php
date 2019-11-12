@@ -23,7 +23,7 @@
     <form action="{{route('rest.pass',$user->email)}}" method="post" >
         @csrf
       <div class="form-group has-feedback">
-        <h1 class="login-box-msg">Xac nhan tai khoan</h1>
+        <h1 class="login-box-msg">Đăt lại mật khẩu</h1>
         <p class="login-box-msg">{{isset($user->email)?$user->email:'???'}}</p>
         <p class="login-box-msg">Vui long nhap ma xac nhan da gui den email!</p>
       </div>

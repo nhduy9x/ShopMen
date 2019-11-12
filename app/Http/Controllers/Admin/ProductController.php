@@ -5,18 +5,21 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Category;
+use App\Models\Attribute;
+use App\Models\AttributeSize;
+use App\Models\CateProduct;
 use App\Models\Image;
 use App\Http\Requests\ClassProductRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use DB;
 class ProductController extends Controller
 {
     
     public function list(){
       
-        $cates=Category::all();
+        $cates=CateProduct::all();
         
     	$products=Product::all();
     	
@@ -24,12 +27,12 @@ class ProductController extends Controller
     }
     public function add(){
     	$product=new Product();
-    	$cates=Category::all();
+    	$cates=CateProduct::all();
     	return view('admin.products.form',compact('product','cates'));
     }
     public function getup($id){
     	$product=Product::find($id);
-    	$cates=Category::all();
+    	$cates=CateProduct::all();
     	return view('admin.products.form',compact('product','cates'));
     }
     public function delete(Product $class){
@@ -44,61 +47,81 @@ class ProductController extends Controller
 
     	}
         $model->slug=str::slug($request->name.'-'.microtime());
-        $model->promotion_price=($request->sale_percent/100)*$request->price;
+        
+        
+    	if ($request->hasFile('image')>0) {
+            // lay ra duoi anhs
+            $ext = $request->image->extension();
+
+            // lay ten anh go
+            $filename = $request->image->getClientOriginalName();
+
+            // sinh ra ten anh moi theo dang slug
+            $filename = str::slug(str_replace("." . $ext, "", $filename));
+            
+            // ten anh + string random + duoi
+            $filename = $filename . "-" . str::random(20) . "." . $ext;
+            $file=$request->file('image');
+            $model->img =$file->move("img/uploads/products",$filename);
+        }else if (isset($request->anh)) {
+            $model->img=$request->anh;
+        } else {
+            return redirect()->back()->with('image', 'Không dược để trống!');
+            
+        }
         $model->fill($request->all());
         $model->save();
-    	if($request->hasFile('image')) {
-            $allowedfileExtension=['jpg','png','jpeg','gif','bmp'];
-            $files = $request->file('image');
-            // flag xem có thực hiện lưu DB không. Mặc định là có
-            $exe_flg = true;
-            // kiểm tra tất cả các files xem có đuôi mở rộng đúng không
-            foreach($files as $file) {
-                //lấy đuôi anh jpg,png..
-                $extension = $file->getClientOriginalExtension();
-                // kiem tra dinh dạng ảnh
-                $check=in_array($extension,$allowedfileExtension);
-
-                if(!$check) {
-                    // nếu có file nào không đúng đuôi mở rộng thì đổi flag thành false
-                    $exe_flg = false;
-                    break;
-                }
-            } 
-            // nếu không có file nào vi phạm validate thì tiến hành lưu DB
-            if($exe_flg) {
-                
-                
-                // duyệt từng ảnh và thực hiện lưu
-                foreach ($files as $image) {
-                    // lay ten anh gốc gôm cả đuôi ảnh
-                $filenameWithExt = $image->getClientOriginalName();
-                // lấy tên anh;
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-               //lấy đuôi anh jpg,png..
-                $extension = $image->getClientOriginalExtension();
-                
-                $fileNameToStore = str::slug($filename."-".str::random(10)).'.'.$extension;
-                
-                $img=$image->move('img/uploads/products', $fileNameToStore);
-                Image::create([
-                      
-                        'filename' => $img,
-                        'product_id'=>$model->id,
-                    ]);
-                }
-              
-            } else {
-                return redirect(route('add.product'))->withErrors([
-                        'image' => 'image ko dung định dạng!'
-                    ]);
+        return redirect(route('addcolor.product',$model->id));
+    }
+    public function addcolor(Request $req,$id){
+        $product=Product::find($id);
+        // $dataSizeQuan    =  $product->join('attributes','attributes.product_id','=','products.id')->join('attribute_sizes','attribute_sizes.attribute_id','=','attributes.id')->where('attribute_sizes.product_id','=',$id)->get(array(
+        //     'color',
+        //     'size',
+        //     'qty'
+        // ))->groupBy('color');
+        $attribute=Attribute::all();
+        $data = $product->attributes()->get();
+        // dd($dataSizeQuan);
+        return view('admin.products.formcolor',
+        [
+            'id' => $id,
+            'data' =>$data,
+            
+        ]);
+    }
+   public function post_add_addcolor(Request $request){
+        $idmax = Attribute::all()->max('id')+1;
+        $data = $request->except('_token','size','qty','img');
+        $data['id'] = $idmax ;
+        // dd($idmax);
+        $dataSM = $request->except('_token','color','uploadImg','price','img','sale_percent','product_id');
+        // dd($dataSM);
+        $dataSizeQuan = [];
+        $size = $request->size;
+        foreach($size as $i){
+            array_push($dataSizeQuan,["product_id"=>$request->product_id,"attribute_id"=>$idmax]);
+        }
+        // dd($dataSizeQuan);
+        foreach($dataSM as $key => $item){
+            // dd($key,$item);
+            for($i=0; $i< count($item); $i++){
+                // dd($item[$i]);
+                $dataSizeQuan[$i][$key] = $item[$i];
             }
         }
-        // die();
-       
-        return redirect(route('list.product'));
+
+        $file = $request->file('uploadImg');
+        $destinationPath = 'uploads';
+        $file->move("img/uploads/productss",$file->getClientOriginalName());
+        $urlImg = $file->getClientOriginalName();
+        $att=Attribute::create($data);
+        // dd($dataSizeQuan);
+       // $size= DB::table('attribute_sizes')->insert($dataSizeQuan);
+        $size=AttributeSize::create($dataSizeQuan);
+        // dd($size);
+        return back()->withInput();
     }
-   
    
 
 }

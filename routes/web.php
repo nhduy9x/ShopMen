@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,10 +11,23 @@
 */
 
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return view('home.product');
+});
+Route::get('product', function () {
+    return view('home.product');
+});
+Route::get('product-detail', function () {
+    return view('home.product-detail');
+});
+Route::get('t', function () {
+    return view('testcart');
 });
 Route::get('dashboard', function () {
     return view('admin.dashboard');
+});
+Route::group(['prefix'=>'cart'],function(){
+	Route::get('add','Member\CartController@add')->name('add.cart');
+	Route::get('addt','Member\CartController@t')->name('t.cart');
 });
 Route::get('don-hang', function () {
     return view('admin.orders.list');
@@ -71,6 +83,8 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('list','Admin\productController@list')->name('list.product');
 		Route::get('add','Admin\productController@add')->name('add.product');
+		Route::get('add/{id}','Admin\productController@addcolor')->name('addcolor.product');
+		Route::post('add-property','Admin\productController@post_add_addcolor')->name('color');
 		Route::get('up/{id}','Admin\productController@getup')->name('up.product');
 		Route::get('delete/{class}','Admin\productController@delete')->name('delete.product');
 		Route::post('add-and-up','Admin\productController@save')->name('save.product');

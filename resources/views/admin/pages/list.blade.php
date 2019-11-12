@@ -30,8 +30,8 @@
   		                <tr>
   		                  <td>{{$all->id}}</td>
   		                  <td>{{$all->title}}</td>
-  		                  <td>{!!str_limit($all->content,50,'...')!!}</td>
-  		                  <td><img src="{{asset($all->image)}}" width="50px"></td>
+  		                  <td>{!!Str::limit($all->content,50,'...')!!}</td>
+  		                  <td><img src="{{asset(isset($all->image)?$all->image:'img/default.jpg')}}" width="50px"></td>
   		                  <td>
                           <a href="{{route('up.page',$all->id)}}" class="btn btn-app" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a>
                           <a href="{{route('delete.page',$all->id)}}" class="btn btn-app" class="btn btn-success" onclick="return confirmDel()"><i class="fa fa-trash-o"></i>Xoa</a> 

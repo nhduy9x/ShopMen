@@ -25,11 +25,11 @@ class ClassProductRequest extends FormRequest
     {
         return [
             'name' => 'required|min:6|max:50',
-            // 'image' => 'image',
-            'price'=>'required',
-            'stocks'=>'required',
+            'image' => 'image',
+            
+            
             'source'=>'required',
-            'category_id'=>'required',
+            
             'short_desc'=>'required',
             'description'=>'required',
             
@@ -42,9 +42,7 @@ class ClassProductRequest extends FormRequest
             'name.min' => 'it nhat 6 ky tu',
             'name.max' => 'it lon nhat 50 ky tu',
             'short_desc.required'  => 'ko de trong',
-            // 'image.image'  => 'Yêu cầu định dạng file ảnh',
-            'price.required'  => 'ko de trong',
-            'stocks.required'  => 'ko de trong',
+            'image.image'  => 'Yêu cầu định dạng file ảnh',
             'source.required'  => 'ko de trong',
             'description.required'  => 'ko de trong',
             'category_id.required'  => 'vui long chon'

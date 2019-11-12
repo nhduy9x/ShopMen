@@ -25,8 +25,8 @@
 		                <tr>
 		                  <td>{{$all->id}}</td>
 		                  <td>{{$all->name}}</td>
-		                  <td>{{$all->price}}</td>
-		                  <td><img src="{{asset($all->images)}}" width="50px"></td>
+		                  <td>{!!Str::limit($all->short_desc,50,'...') !!}</td>
+		                  <td><img src="{{asset(isset($all->img)?$all->img:'img/defaul.jpg')}}" width="50px"></td>
 		                  <td>{{isset($all->cate->name)?$all->cate->name:'null'}}</td> 
 		                  <td><a href="{{route('up.product',$all->id)}}" class="btn btn-app" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a> <a onclick="return confirmDel()" href="{{route('delete.product',$all->id)}}" class="btn btn-app"><i class="fa fa-trash-o" ></i>Delete</a></td>
 		                </tr>
