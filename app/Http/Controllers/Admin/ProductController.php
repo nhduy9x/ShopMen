@@ -92,17 +92,18 @@ class ProductController extends Controller
     }
    public function post_add_addcolor(Request $request){
         $idmax = Attribute::all()->max('id')+1;
-        $data = $request->except('_token','size','qty','img');
+        $data = $request->except('_token','size','qty','image');
+        
         $data['id'] = $idmax ;
         // dd($idmax);
-        $dataSM = $request->except('_token','color','uploadImg','price','img','sale_percent','product_id');
+        $dataSM = $request->except('_token','color','uploadImg','price','image','sale_percent','product_id');
         // dd($dataSM);
         $dataSizeQuan = [];
         $size = $request->size;
         foreach($size as $i){
             array_push($dataSizeQuan,["product_id"=>$request->product_id,"attribute_id"=>$idmax]);
         }
-        // dd($dataSizeQuan);
+        // dd($dataSM);
         foreach($dataSM as $key => $item){
             // dd($key,$item);
             for($i=0; $i< count($item); $i++){
@@ -110,11 +111,28 @@ class ProductController extends Controller
                 $dataSizeQuan[$i][$key] = $item[$i];
             }
         }
+        if ($request->hasFile('image')>0) {
+            // lay ra duoi anhs
+            $ext = $request->image->extension();
 
-        $file = $request->file('uploadImg');
-        $destinationPath = 'uploads';
-        $file->move("img/uploads/productss",$file->getClientOriginalName());
-        $urlImg = $file->getClientOriginalName();
+            // lay ten anh go
+            $filename = $request->image->getClientOriginalName();
+
+            // sinh ra ten anh moi theo dang slug
+            $filename = str::slug(str_replace("." . $ext, "", $filename));
+            
+            // ten anh + string random + duoi
+            $filename = $filename . "-" . str::random(20) . "." . $ext;
+            $file=$request->file('image');
+            $img =$file->move("img/uploads/products",$filename);
+        }
+        $data['img']=$img;
+        // dd($data);
+        // $file = $request->file('uploadImg');
+        // $destinationPath = 'uploads';
+        // $file->move("img/uploads/productss",$file->getClientOriginalName());
+        // $urlImg = $file->getClientOriginalName();
+        // dd($data);
         $att=Attribute::create($data);
         // dd($dataSizeQuan);
        // $size= DB::table('attribute_sizes')->insert($dataSizeQuan);
