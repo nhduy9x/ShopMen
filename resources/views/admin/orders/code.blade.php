@@ -21,7 +21,8 @@
                   <label for="exampleInputPassword1">Loại mã ưu đãi</label>
                   <select name="category_id" class="form-control">
                   <option value="">--chon--</option>
-                                               
+                  <option value="total">--Tong tien--</option>
+                  <option value="subtotal">--Tong tien chua ship--</option>                             
                   </select>
                 </div>
                 <div class="form-group">
