@@ -55,9 +55,13 @@ class LoginController extends Controller
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password],$rem)){
             if (Auth::user()->email_verified_at == null) {
                 return redirect(route('verify',Auth::user()->email));
+            } 
+            if (Auth::user()->is_active>0) {
+                return redirect(route('dashboard'));
             } else {
                 return redirect('/');
             }
+            
             
             
         }

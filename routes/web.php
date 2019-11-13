@@ -13,12 +13,8 @@
 Route::get('/', function () {
     return view('home.product');
 });
-Route::get('product', function () {
-    return view('home.product');
-});
-Route::get('product-detail', function () {
-    return view('home.product-detail');
-});
+Route::get('product', 'HomeController@product')->name('product');
+Route::get('product-detail/{slug}','HomeController@productdetail');
 Route::get('t', function () {
     return view('testcart');
 });
@@ -54,13 +50,20 @@ Route::get('password-success/{id}','Auth\ResetPasswordController@PassSuccess')->
 Route::group(['prefix'=>'shop-men/admin'],function(){
 	Route::get('/',function () {
     return view('admin.index');
-	});
+	})->name('dashboard');
 	Route::group(['prefix'=>'cate'],function(){
 		Route::get('list','Admin\CateProductController@list')->name('list.cate');
 		Route::get('add','Admin\CateProductController@add')->name('add.cate');
 		Route::get('up/{id}','Admin\CateProductController@getup')->name('up.cate');
 		Route::get('delete/{class}','Admin\CateProductController@delete')->name('delete.cate');
 		Route::post('add-and-up','Admin\CateProductController@save')->name('save.cate');
+	});
+	Route::group(['prefix'=>'slide'],function(){
+		Route::get('list','Admin\SlideShowController@list')->name('list.slide');
+		Route::get('add','Admin\SlideShowController@add')->name('add.slide');
+		Route::get('up/{id}','Admin\SlideShowController@getup')->name('up.slide');
+		Route::get('delete/{class}','Admin\SlideShowController@delete')->name('delete.slide');
+		Route::post('add-and-up','Admin\SlideShowController@save')->name('save.slide');
 	});
 	Route::group(['prefix'=>'catepost'],function(){
 		Route::get('list','Admin\CatePostController@list')->name('list.catepost');

@@ -92,8 +92,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('list.product')}}">Tất cả slider show</a></li>
-            <li><a href="{{route('list.product')}}">Thêm mới slider show</a></li>
+            <li><a href="{{route('list.slide')}}">Tất cả slider show</a></li>
+            <li><a href="{{route('add.slide')}}">Thêm mới slider show</a></li>
             
           </ul>
         </li>

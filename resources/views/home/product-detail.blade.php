@@ -1,14 +1,16 @@
-@extends('layouts.home.main')    
-@section('title','detail')
 
+    <!-- end header -->
+@extends('layouts.home.main')    
+@section('title','danh muc')
 @section('content')
- <section id="breadcrumb">
+    <!-- breadcrumb -->
+   <section id="breadcrumb">
         <div class="container-fluid bg-light">
             <div class="row">
                 <div class="col-12">
                     <ul class="list-inline list-breadcrumb">
                         <li class="list-inline-item">
-               s             <a href="">Trang chủ</a>
+                            <a href="">Trang chủ</a>
                             <span class="span-brc">>></span>
                         </li>
                         <li class="list-inline-item">
@@ -31,92 +33,48 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="slide-top ">
-                      {{--   @foreach($ as $item)
-                            <div class="product-img-item bg-light">
-                                <img src="{{asset($item->img)}}" alt="">
-                                
-                            </div>
-                        @endforeach --}}
-                        
+                        <div class="product-img-item bg-light">
+                            <img src="./img/ao-vest-cao-cap-den-av2l1089-6975-slide-2.jpg" alt="">
+                        </div>
+                        <div class="product-img-item bg-light">
+                            <img src="./img/ao-vest-cao-cap-den-av2l1089-6975-slide-1 (1).jpg" alt="">
+                        </div>
                         <div class="owl-controls">
                             <i class="fa fa-chevron-left"></i>
                             <i class="fa fa-chevron-right"></i>
                         </div>
                     </div>
+                    <div class="slide-bottom">
+                        <div class="row">
+                            <div class="col-3 thumb-img-item active">
+                                <img src="./img/ao-vest-cao-cap-den-av2l1089-6975-slide-2.jpg" alt="">
+                            </div>
+                            <div class="col-3 thumb-img-item">
+                                <img src="./img/ao-vest-cao-cap-den-av2l1089-6975-slide-1 (1).jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-7">
                     <h5 class="product-single-title">
-                        {{$product->name}}
+                        Áo Vest Đen 
                     </h5>
-                   
-                  {{--   @foreach($productProperties as $item)
-                        <p class="product-single-price">
-                            <span class="span-underline">
-                                Giá bán: 
-                            </span>
-                            <span class="span-price-red pricesubmit">
-                                {{$item->price - $item->price*($item->sale_percent/100)}}
-                            </span>
-                            <span class="span-underline">
-                                Giá gốc: 
-                            </span>
-                            <span class="span-price-red" >
-                                <s>
-                                    @if($item->sale_percent != 0)
-                                    {{$item->price}}
-                                    @endif
-                                </s>
-                            </span>
-                        </p>
-                    @endforeach --}}
-
-                    <p>
+                    <p class="product-single-price">
                         <span class="span-underline">
-                            Màu sắc : 
+                            Giá bán: 
+                        </span>
+                        <span class="span-price-red">
+                            500.000
                         </span>
                     </p>
-
-                    <p class="product-single-color">
-                       {{--  @for($i=0; $i<count($productProperties); $i++)
-                            <button class="btn-color">{{$productProperties[$i]->color}}</button>
-                            
-                        @endfor   --}}  
-                        
-                    </p>
-
-                    <p>
+                    <p class="product-single-stock">
                         <span class="span-underline">
-                            Size : 
+                            Tình trạng: 
+                        </span>
+                        <span >
+                            Còn hàng
                         </span>
                     </p>
-                   {{--  @for($i=0; $i<count($productProperties); $i++)
-                            <div class="size">
-                                @for($j=0; $j<count($dataSizeQuan[$productProperties[$i]['color']]); $j++)
-                                    <button class="btn-size">{{$dataSizeQuan[$productProperties[$i]['color']][$j]->size}}</button>
-                                @endfor
-                            </div>
-                    @endfor
-                    @for($i=0; $i<count($productProperties); $i++)
-                        <div class="div-stock">
-                        @for($j=0; $j<count($dataSizeQuan[$productProperties[$i]['color']]); $j++)
-                                <p class="product-single-stock">
-                                    <span class="span-underline">
-                                        Tình trạng: 
-                                    </span>
-                                    @if($dataSizeQuan[$productProperties[$i]['color']][$j]->quantity > 0)
-                                        <span >
-                                            Còn hàng
-                                        </span>
-                                    @else
-                                        <span>
-                                            Hết hàng
-                                        </span>
-                                    @endif
-                                </p>
-                        @endfor
-                        </div>
-                    @endfor --}}
-                    
                     <p class="product-category">
                         <span class="span-underline">
                             Danh mục: 
@@ -134,10 +92,26 @@
                         Áo Vest Cao Cấp Đen  thiết kế dạng vest cổ bẻ, tay dài, 1 nút gài, form áo ôm vừa tạo giúp tôn dáng quý ông. Áo màu đen mạnh mẽ, có một túi viền trắng trước ngực và 2 túi bên hông có nắp bẻ, tay áo được phối nút tạo cho chàng nét lịch thiệp, mạnh mẽ hơn trong mắt đồng nghiệp, đối tác.
                     </p>
                     <form action="">
-                        <input type="hidden" id="fcolor">
-                        <input type="hidden" id="fsize">
-                        <input type="hidden" id="fprice">
                         <div class="row row-add-cart">
+                            <div class="col-6 col-md-4">
+                                <span>
+                                    Size*
+                                </span>
+                                <select name="" id="">
+                                    <option value="">
+                                        M
+                                    </option>
+                                    <option value="">
+                                        L
+                                    </option>
+                                    <option value="">
+                                        XL
+                                    </option>
+                                    <option value="">
+                                        XXL
+                                    </option>
+                                </select>
+                            </div>
                             <div class="col-6 col-md-4">
                                 <span>
                                     Số lượng *
@@ -380,5 +354,8 @@
                 </div>
             </div>
         </div>
-    </section>  
+    </section>   
+    <!-- end tabpanel -->
 @endsection
+    <!-- footer -->
+    

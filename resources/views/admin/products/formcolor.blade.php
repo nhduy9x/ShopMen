@@ -27,8 +27,8 @@
         </div>
         <p><a id="thea" href="javascript:void(0)">Thêm size và số lượng</a></p>
         <label for="">Chọn ảnh</label>
-        <input type="file" id="fileInput" name="uploadImg" >
-        <input type="hidden"  name="img" id="fileUpload" >
+        <input type="file" id="fileInput" name="image" >
+        <input type="hidden"   id="fileUpload" >
         <img id="blah" style="width:100px;height:100px;display:none" >
         <p id="alet-tb" class="text-danger">Bạn chưa chọn ảnh</p>
         <br>

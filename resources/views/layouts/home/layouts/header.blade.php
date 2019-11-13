@@ -18,6 +18,9 @@
                         <li class="list-inline-item ">
                             <a href="#">Giới thiệu</a>
                         </li>
+                        <li class="list-inline-item ">
+                            <a href="{{route('login')}}">login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
