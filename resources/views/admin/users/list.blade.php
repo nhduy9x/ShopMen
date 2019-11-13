@@ -33,7 +33,7 @@
                       <td>{{$all->birthday}}</td>
                       <td><img src="{{ asset(isset($all->avatar)?$all->avatar:'img/avatar.jpg')}}" width="50px"></td>
                       <td>
-                       @if($all->is_active>1)
+                       @if($all->is_active>=1)
                           
                           <span class="btn-primary">da active</span>
                        @else

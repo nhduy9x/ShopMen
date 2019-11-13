@@ -32,4 +32,8 @@ class HomeController extends Controller
             ]
         );
     }
+    public function product(){
+    	$products=Product::paginate(15);
+    	return view('home.product',compact('products'));
+    }
 }

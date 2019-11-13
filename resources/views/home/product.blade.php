@@ -71,126 +71,18 @@
                         </li>
                     </ul>
                     <div class="row">
+                        @foreach($products as $product)
                         <div class="col-6 col-md-4 product-item text-center">
                             <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
+                                <img src="{{asset(isset($product->img)?$product->img:'default.jpg')}}" alt="">
                                 <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
                             </div>
                             <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
+                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">{{$product->name}}</a></h4>
                                 <span class="product-price"> 425.000 </span>
                             </div>
                         </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 product-item text-center">
-                            <div class="item-thumb">
-                                <img src="{{asset('home/img/ao-khoac-kaki-reu-ak260_2_small-10767-t.jpg')}}" alt="">
-                                <a href=""><i class="fas fa-shopping-cart product-item-cart"></i></a>
-                            </div>
-                            <div class="change-list">
-                                <h4 class="product-title"><a href="#" title="Áo Khoác Kaki Rêu AK260">Áo Khoác Kaki Rêu AK260</a></h4>
-                                <span class="product-price"> 425.000 </span>
-                            </div>
-                        </div>
+                        @endforeach
                         <div class="col-12">
                             <hr>
                             <ul class="pagination-product list-inline float-right">
