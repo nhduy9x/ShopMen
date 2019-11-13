@@ -10,35 +10,42 @@ use Illuminate\Support\Str;
 class CateProductController extends Controller
 {
     public function list(){
-       
-        $cates=CateProduct::all();
-     
-        return view('admin.categories.list',compact('cates'));
+        $cates=CateProduct::paginate(10);
+        // $cates=CateProduct::all();
+        return view('admin.category.list',compact('cates'));
     }
-    public function add(){
-        $cate=new CateProduct();
-        $cates=CateProduct::all();
-        return view('admin.categories.form',compact('cate','cates'));
+    public function form_add(){
+        $categoriesParent = CateProduct::where('parent_id', '=', null)->get();
+        return view('admin.category.form_add',
+            [
+                'categoriesParent' => $categoriesParent
+            ]
+        );
     }
-    public function getup($id){
-        $cate=CateProduct::find($id);
-        $cates=CateProduct::all();
-        return view('admin.categories.form',compact('cate','cates'));
+    public function form_update($id){
+        $category = CateProduct::find($id);
+        $categoriesParent = CateProduct::where('parent_id', '=', null)->get();
+        
+        return view('admin.category.form_add',
+            [
+                'categoriesParent' => $categoriesParent,
+                'category' => $category
+            ]
+        );
     }
-    public function delete(CateProduct $class){
-        $class->delete();
-        return redirect(route('list.cate'));
-    }
-    public function save(ClassCateProductRequest $request){
-        if (isset($request->id)) {
-            $model=CateProduct::find($request->id);
-        }else{
-            $model=new CateProduct();
 
-        }
-        $model->slug=str::slug($request->name.'-'.microtime());
-        $model->fill($request->all());
-        $model->save();
-        return redirect(route('list.cate'));
+    public function post_add(Request $request){
+       $category =  $request->except('_token');
+       $category['slug']=Str::slug($request->name);
+       CateProduct::insert($category);
+       return redirect(route('list.cate.product'));
+    }
+
+    public function post_update(Request $request){
+        $id = $request->id;
+        $data = $request->except('_token');
+        $category = CateProduct::find($id);
+        $category->update($data);
+        return redirect(route('list.cate.product'));
     }
 }

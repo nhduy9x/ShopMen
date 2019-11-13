@@ -77,9 +77,9 @@
             </span>
           </a> 
           <ul class="treeview-menu">
-            <li><a href="{{route('list.product')}}">Tất cả sản phẩm</a></li>
-            <li><a href="{{route('add.product')}}"> Thêm mới</a></li>
-            <li><a href="{{route('list.cate')}}">Danh mục</a></li>
+            <li><a href="/shop-men/admin/product">Tất cả sản phẩm</a></li>
+            <li><a href="/shop-men/admin/product/add"> Thêm mới</a></li>
+            <li><a href="{{route('list.cate.product')}}">Danh mục</a></li>
           </ul>
         </li>
         

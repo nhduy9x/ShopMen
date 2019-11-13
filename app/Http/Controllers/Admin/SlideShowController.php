@@ -55,6 +55,7 @@ class SlideShowController extends Controller
         }else {
          $model->image=$request->anh;
         }
+        // dd($request->all());
         $model->fill($request->all());
         // dd( $request->all());
         

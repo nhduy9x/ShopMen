@@ -41,7 +41,7 @@
                                         </div>
                                         <div style="width: 100%;">
                                             <label class="col-form-label">image</label>
-                                            <input type="hidden" name="anh" value="">
+                                            <input type="hidden" name="anh" value="{{$page->image}}">
                                             <div class="col-form">
                                                 
                                                 <input type="file" name="images" id="asgnmnt_file" class="form-control" onchange="fileSelected(this)" >

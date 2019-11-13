@@ -54,9 +54,10 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+@yield('script')
 <!-- jQuery 3 -->
 @include('layouts.admin.layouts.js')
 @yield('js')
+
 </body>
 </html>

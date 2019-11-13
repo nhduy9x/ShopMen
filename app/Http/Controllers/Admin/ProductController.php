@@ -9,6 +9,8 @@ use App\Models\Attribute;
 use App\Models\AttributeSize;
 use App\Models\CateProduct;
 use App\Models\Image;
+use App\Models\Product_Property;
+use App\Models\Product_Size_Quan;
 use App\Http\Requests\ClassProductRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -17,129 +19,138 @@ use DB;
 class ProductController extends Controller
 {
     
-    public function list(){
-      
-        $cates=CateProduct::all();
-        
-    	$products=Product::all();
-    	
-    	return view('admin.products.list',compact('products','cates'));
+    public function show_all_product(){
+        $products = Product::all() ;
+        return view('admin.product.products',
+            [
+                'products' => $products
+            ]
+        );
     }
-    public function add(){
-    	$product=new Product();
-    	$cates=CateProduct::all();
-    	return view('admin.products.form',compact('product','cates'));
-    }
-    public function getup($id){
-    	$product=Product::find($id);
-    	$cates=CateProduct::all();
-    	return view('admin.products.form',compact('product','cates'));
-    }
-    public function delete(Product $class){
-        $class->delete();
-        return redirect(route('list.product'));
-    }
-    public function save(ClassProductRequest $request){
-    	if (isset($request->id)) {
-    		$model=Product::find($request->id);
-    	}else{
-    		$model=new Product();
 
-    	}
-        $model->slug=str::slug($request->name.'-'.microtime());
-        
-        
-    	if ($request->hasFile('image')>0) {
-            // lay ra duoi anhs
-            $ext = $request->image->extension();
-
-            // lay ten anh go
-            $filename = $request->image->getClientOriginalName();
-
-            // sinh ra ten anh moi theo dang slug
-            $filename = str::slug(str_replace("." . $ext, "", $filename));
-            
-            // ten anh + string random + duoi
-            $filename = $filename . "-" . str::random(20) . "." . $ext;
-            $file=$request->file('image');
-            $model->img =$file->move("img/uploads/products",$filename);
-        }else if (isset($request->anh)) {
-            $model->img=$request->anh;
-        } else {
-            return redirect()->back()->with('image', 'Không dược để trống!');
-            
+    public function upsizequan(Request $request, $id){
+        $file = $request->file('uploadImg');
+        if($file != null){
+            $destinationPath = 'uploads';
+            $file->move($destinationPath,$file->getClientOriginalName());
         }
-        $model->fill($request->all());
-        $model->save();
-        return redirect(route('addcolor.product',$model->id));
-    }
-    public function addcolor(Request $req,$id){
-        $product=Product::find($id);
-        // $dataSizeQuan    =  $product->join('attributes','attributes.product_id','=','products.id')->join('attribute_sizes','attribute_sizes.attribute_id','=','attributes.id')->where('attribute_sizes.product_id','=',$id)->get(array(
-        //     'color',
-        //     'size',
-        //     'qty'
-        // ))->groupBy('color');
-        $attribute=Attribute::all();
-        $data = $product->attributes()->get();
-        // dd($dataSizeQuan);
-        return view('admin.products.formcolor',
-        [
-            'id' => $id,
-            'data' =>$data,
-            
-        ]);
-    }
-   public function post_add_addcolor(Request $request){
-        $idmax = Attribute::all()->max('id')+1;
-        $data = $request->except('_token','size','qty','image');
-        
-        $data['id'] = $idmax ;
-        // dd($idmax);
-        $dataSM = $request->except('_token','color','uploadImg','price','image','sale_percent','product_id');
-        // dd($dataSM);
+        $productId = Product_Property::find($id)->product_id;
+        $dataUpdate =  $request->except('_token','size','quantity','uploadImg') ;
+        $dataSM = $request->except('_token','color','price','img','sale_percent','uploadImg');
         $dataSizeQuan = [];
         $size = $request->size;
         foreach($size as $i){
-            array_push($dataSizeQuan,["product_id"=>$request->product_id,"attribute_id"=>$idmax]);
+            array_push($dataSizeQuan,["product_id"=>$productId,"product_property_id"=>$id]);
         }
-        // dd($dataSM);
         foreach($dataSM as $key => $item){
-            // dd($key,$item);
             for($i=0; $i< count($item); $i++){
-                // dd($item[$i]);
                 $dataSizeQuan[$i][$key] = $item[$i];
             }
         }
-        if ($request->hasFile('image')>0) {
-            // lay ra duoi anhs
-            $ext = $request->image->extension();
+        Product_Property::find($id)->update($dataUpdate);
+        Product_Size_Quan::where('product_property_id','=',$id)->delete();
+        Product_Size_Quan::insert($dataSizeQuan);
+        return redirect('/add-property/' .$productId);
+    }
 
-            // lay ten anh go
-            $filename = $request->image->getClientOriginalName();
+    public function update_property($id){
+        $property = Product_Property::find($id);
+        $sizequan = $property->product_size_quan()->get();
+        return view('admin.product.update_property',[
+            'property' => $property,
+            'sizequan' => $sizequan
+        ]);
+    }
 
-            // sinh ra ten anh moi theo dang slug
-            $filename = str::slug(str_replace("." . $ext, "", $filename));
-            
-            // ten anh + string random + duoi
-            $filename = $filename . "-" . str::random(20) . "." . $ext;
-            $file=$request->file('image');
-            $img =$file->move("img/uploads/products",$filename);
-        }
-        $data['img']=$img;
-        // dd($data);
-        // $file = $request->file('uploadImg');
-        // $destinationPath = 'uploads';
-        // $file->move("img/uploads/productss",$file->getClientOriginalName());
-        // $urlImg = $file->getClientOriginalName();
-        // dd($data);
-        $att=Attribute::create($data);
-        // dd($dataSizeQuan);
-       // $size= DB::table('attribute_sizes')->insert($dataSizeQuan);
-        $size=AttributeSize::create($dataSizeQuan);
-        // dd($size);
+    public function delete_property($id){
+        Product_Size_Quan::where('product_property_id','=',$id)->delete();
+        Product_Property::find($id)->delete();
         return back()->withInput();
     }
-   
+
+    public function post_add_property(Request $request){
+        $idmax = Product_Property::all()->max('id') +1;
+        $data = $request->except('_token','size','quantity','uploadImg');
+        $data['id'] = $idmax ;
+        
+        $dataSM = $request->except('_token','uploadImg','color','price','img','sale_percent','product_id');
+        $dataSizeQuan = [];
+        $size = $request->size;
+        foreach($size as $i){
+            array_push($dataSizeQuan,["product_id"=>$request->product_id,"product_property_id"=>$idmax]);
+        }
+        foreach($dataSM as $key => $item){
+            for($i=0; $i< count($item); $i++){
+                $dataSizeQuan[$i][$key] = $item[$i];
+            }
+        }
+        $file = $request->file('uploadImg');
+        $destinationPath = 'uploads';
+        $file->move($destinationPath,$file->getClientOriginalName());
+        $urlImg = $file->getClientOriginalName();
+        Product_Property::create($data);
+        Product_Size_Quan::insert($dataSizeQuan);
+        return back()->withInput();
+    }
+
+    public function add_property($id){
+        $product = Product::find($id);
+        $dataSizeQuan    =  $product->join('product_properties','product_properties.product_id','=','products.id')->join('product_size_quans','product_size_quans.product_property_id','=','product_properties.id')->where('product_size_quans.product_id','=',$id)->get(array(
+            'color',
+            'size',
+            'quantity'
+        ))->groupBy('color');
+        $data = $product->product_propety()->get();
+        return view ('admin.product.add_property',
+        [
+            'id' => $id,
+            'data' =>$data,
+            'sizequan' => $dataSizeQuan
+        ]);
+    }
+
+    public function post_product_add(Request $request){
+        $idmax = Product::all()->max('id') +1;
+        $slug=Str::slug($request->name);
+        $data = $request->except('_token','uploadImg');
+        $file = $request->file('uploadImg');
+        $destinationPath = 'uploads';
+        $file->move($destinationPath,$file->getClientOriginalName());
+        $data['id'] =  $idmax ;
+        // dd($data);
+        $data['slug']=$slug;
+        Product::create($data);
+        return redirect(route('addcolor.product',$idmax));
+    }
+
+    public function product_add(){
+        // $categoriesParent = Category::where('parent_id', '=', null)->get();
+        // $categoriesChild = Category::where('parent_id', '!=', null)->get(array(
+        //     'id',
+        //     'name',
+        //     'parent_id'
+        // ))->groupBy('parent_id');
+        // dd($categoriesChild);
+        return view('admin.product.product_add');
+    }
+
+    public function product_detail($id){
+        $product = Product::find($id);
+        $productProperties = $product->product_propety()->get();
+        
+        $dataSizeQuan    =  $product->join('products_properties','products_properties.product_id','=','products.id')->join('products_size_quan','products_size_quan.product_property_id','=','products_properties.id')->where('products_size_quan.product_id','=',$id)->get(array(
+            'color',
+            'size',
+            'quantity'
+        ))->groupBy('color');
+        
+        return view('client.product_detail',
+            [
+                'product' => $product,
+                'productProperties' => $productProperties,
+                'dataSizeQuan' =>$dataSizeQuan
+            ]
+        );
+    }
 
 }

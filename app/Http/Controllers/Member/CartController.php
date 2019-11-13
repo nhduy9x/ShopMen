@@ -16,7 +16,16 @@ class CartController extends Controller
   		));
   		return redirect()->back();
     }
-    public function t(){
+    public function t(Request $req){
+        // dd($req->price);
+        // $data=$req->except('_token');
+        $item = \Cart::add(array(
+          'id' => $req->id,
+          'name' => $req->name,
+          'price' => $req->price,
+          'quantity' => $req->qty,
+        ));
+        dd($item);
     	$cart=\Cart::getContent();
     	$total = \Cart::getTotal();
     	return view('testcart',compact('cart','total'));
