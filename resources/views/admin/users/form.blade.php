@@ -12,8 +12,11 @@
         <!-- /.col (left) -->
         <div class="col-md-10">
           <div class="box box-primary">
-            <div class="box-header">
-              <h3 class="box-title">Date picker</h3>
+           
+            <div class="">
+              <div style="width: 20%; margin: auto; " >
+                  <img id="asgnmnt_file_img" src="{{ asset(isset($user->avatar)?$user->avatar:'img/avatar.jpg')}}" style="width: 80%; margin-left: 5%; border-radius: 50%">
+                </div>
             </div>
             <div class="box-body">
               <!-- Date -->
@@ -29,25 +32,48 @@
                     </span>
                 </div>
                 <div class="col-md-12" style="margin-left: 0">
+                    @if(Auth::user()->is_active==$user->is_active && Auth::user()->is_active>=2)
+                    <label >Phân quyền</label>
+                    <input type="text" class="form-control" value="Quản chi viên cao cấp" disabled>
+                    @elseif(Auth::user()->is_active>1)
                     <label >Phân quyền</label>
                                     <div >
                                         <select name="category_id" class="form-control">
-                                            <option value="">--chon--</option>
-                                                
+                                            <option value="">--chon--</option> 
+                                            @for($i=0;$i<2;$i++)
+                                             <option @if($i==$user->is_active)
+                                                            selected 
+                                                        @endif value="{{$i}}">{{$i==0?'thành viên':'Quản chi viên'}}</option>
+                                             
+                                            @endfor   
                                         </select>
+                    @endif
+                    
+
+                    {{-- @if(Auth::user()->is_active==$user->is_active==2)
+                    <input type="text" class="form-control" value="Quản chi viên cao cấp" disabled>
+                    
+                    @endif --}}
                 </div>
               </div>
                 
                 
                 <div class="col-md-12">
                     <label>Email</label>
+                    @if(empty($user->id))
+                    <input type="text" class="form-control" name="email"  placeholder="Email ...">
+                      <span class="text-danger">
+                          @if(count($errors))
+                            {{$errors->first('email')}}   
+                            @endif                              
+                       </span>
+                    @else
+                    <input type="text" class="form-control" value="{{$user->email}}" disabled>
+                    
+                     
+                    @endif
+                    
                   
-                    <input type="text" class="form-control" name="email" value="{{$user->email}}"  placeholder="Email ...">
-                  <span class="text-danger">
-                  @if(count($errors))
-                    {{$errors->first('email')}}   
-                    @endif                              
-                                            </span>
                     
                     
                 </div>
@@ -69,14 +95,14 @@
                     <input type="hidden" name="presentPass" value="">
                     <input type="password" name="cfpass" class="form-control" placeholder="password ...">
                     <span class="text-danger">
-                      @if(count($errors))
-                    {{$errors->first('pass')}}   
+                    @if(session('cfpass'))
+                      {{session('cfpass')}}   
                     @endif                           
                                             </span>
                 </div>
               @endif
               <div class="col-md-12" style="display: flex;flex-wrap: wrap;">
-                <div style="margin: 0; width: 80%" >
+                <div style="margin: 0; width: 100%" >
                   <label>avatar:</label>
                   <input type="hidden" name="anh" value="{{isset($user->avatar)?$user->avatar:''}}">
                  
@@ -90,9 +116,7 @@
                       @endif                          
                   </span>
                 </div>
-                <div style="width: 20%; " >
-                  <img id="asgnmnt_file_img" src="{{ asset(isset($user->avatar)?$user->avatar:'img/avatar.jpg')}}" style="width: 90%; margin-left: 5%">
-                </div>
+                
               </div>
                 
                 
@@ -112,22 +136,7 @@
                     @endif                             
                                             </span>
                 </div>
-                <div class="col-md-12">
-                  <label>avatar:</label>
-                  <input type="hidden" name="anh" value="{{isset($user->avatar)?$user->avatar:''}}">
-                 
-                  <input type="file" name="image" id="asgnmnt_file" class="form-control" onchange="fileSelected(this)" >
-                  <span class="text-danger">
-                      @if(count($errors))
-                    {{$errors->first('image')}}   
-                    @endif
-                    @if (session('image'))                                       
-                             {{ session('image') }}                                      
-                      @endif                          
-                                            </span>
-               
-                  
-                </div>
+                
                
                 <div class="col-md-12">
                    <label>

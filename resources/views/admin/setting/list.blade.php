@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')    
-@section('title','page')
-@section('page','page')
+@section('title','cai đặt giao diện')
+@section('page','cai đặt giao diện')
 @section('content')
 <div class="row">
   
@@ -19,26 +19,25 @@
                     <th>Nội dung</th>
                     <th>image</th>
                     <th>
-                     <a href="{{route('add.page')}}" class="btn btn-app">
-                      <i class="fa fa-plus-square"></i> Them moi trang</a>
+                     
                     </th>
                   </tr>
                   </thead>
                   <tbody>
-                  	@foreach($pages as $all)
+                  	
                   	
   		                <tr>
-  		                  <td>{{$all->id}}</td>
-  		                  <td>{{$all->title}}</td>
-  		                  <td>{!!Str::limit($all->content,20,'...')!!}</td>
-  		                  <td><img src="{{asset(isset($all->image)?$all->image:'img/default.jpg')}}" width="50px"></td>
+  		                  <td>{{$setting->id}}</td>
+  		                  <td>{{$setting->logo_text}}</td>
+  		                  <td>{!!Str::limit($setting->address,20,'...')!!}</td>
+  		                  <td><img src="{{asset(isset($setting->logo_img)?$setting->logo_img:'img/default.jpg')}}" width="50px"></td>
   		                  <td>
-                          <a href="{{route('up.page',$all->id)}}" class="btn btn-app" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a>
-                          <a href="{{route('delete.page',$all->id)}}" class="btn btn-app" class="btn btn-success" onclick="return confirmDel()"><i class="fa fa-trash-o"></i>Xoa</a> 
+                          <a href="{{route('up.setting',$setting->id)}}" class="btn btn-app" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a>
+                          <a href="{{route('delete.setting',$setting->id)}}" class="btn btn-app" class="btn btn-success" onclick="return confirmDel()"><i class="fa fa-trash-o"></i>Xoa</a> 
                           </td>
   		                </tr>
   		            
-                  	@endforeach
+                  	
 
                   </tbody>
                  

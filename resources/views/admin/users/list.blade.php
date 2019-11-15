@@ -33,15 +33,17 @@
                       <td>{{$all->birthday}}</td>
                       <td><img src="{{ asset(isset($all->avatar)?$all->avatar:'img/avatar.jpg')}}" width="50px"></td>
                       <td>
-                       @if($all->is_active>=1)
+                       @if($all->is_active>1)
                           
-                          <span class="btn-primary">da active</span>
+                          <span class="btn-primary">Quản trị viên cao cấp</span>
+                       @elseif($all->is_active==1)
+                          <span class="btn-danger">Quản trị viên</span>
                        @else
-                          <span class="btn-danger">chua active</span>
+                          <span class="btn-danger">thành viên</span>
                         @endif
                       </td>
                       <td><a href="{{route('up.user',$all->id)}}" class="btn btn-app" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a> <a onclick="return confirmDel()" href="" class="btn btn-app"><i class="fa fa-trash-o" style="font-size: 20px; text-align: center;"></i>Delete</a>
-                      <a href="" class="btn btn-app"><i class="fa fa-trash-o" ></i>acvite and cancel</a>
+                      
                       </td>
                     </tr>
                 

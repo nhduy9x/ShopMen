@@ -76,9 +76,11 @@ class UserController extends Controller
         }else if (isset($request->anh)) {
         	$model->avatar=$request->anh;
         } else {
-        	return redirect(route('add.user'))->with('image', 'Không dược để trống!');
+        	return redirect()->back()->with('image', 'Không dược để trống!');
         }
-        
+        if ($request->pass!=$request->cfpass) {
+            return redirect()->back()->with('cfpass', 'Mật khẩu nhập lại không đúng!');
+        }
         $model->code=str::random(6);
         $model->birthday=date("Y-m-d",strtotime($request->date));
         $model->email_verified_at=date('Y-m-d H:i:s');

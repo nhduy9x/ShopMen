@@ -1,7 +1,7 @@
 @extends('layouts.admin.main')
 
 @section('content')
-    <form action="/shop-men/admin/product/add-property" method="post" enctype= "multipart/form-data" >
+    <form action="{{route('add_property_product')}}" method="post" enctype= "multipart/form-data" >
         @csrf
         <input type="hidden"  value ="{{$id}}" name="product_id">
         <label for="">Màu</label>

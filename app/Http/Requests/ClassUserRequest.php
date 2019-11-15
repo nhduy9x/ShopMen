@@ -24,7 +24,7 @@ class ClassUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|Regex:/[.][a-z]{2,6}$/i',
+            'email' => 'required|email|Regex:/[.][a-z]{2,6}$/i|unique:users',
             'pass' => 'min:6|max:16',
             'name'=>'required',
             'image'=>'image',
@@ -37,6 +37,7 @@ class ClassUserRequest extends FormRequest
             'email.required' => 'Vui lòng điền email',
             'email.email' => 'Vui lòng điền đúng định dạng email',
             'email.regex' => 'Vui lòng điền đúng định dạng email',
+            'email.unique'=>'email da tồ tại',
             'pass.min' => 'mật khẩu tối thiểu 6 ký tự',
             'pass.max' => 'Mật khẩu tối đa 16 ký tự',
             'name.required'=>'Vui lòng điền',

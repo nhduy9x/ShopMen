@@ -46,7 +46,7 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> Remember Me
+              <input type="checkbox" name="remember" value="1"> Remember Me
             </label>
           </div>
         </div>
@@ -62,13 +62,13 @@
          {{ $errors->first('error') }}
       @endif
     </p>
-    <div class="social-auth-links text-center">
+    {{-- <div class="social-auth-links text-center">
       <p>- OR -</p>
       <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
         Facebook</a>
       <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
         Google+</a>
-    </div>
+    </div> --}}
     <!-- /.social-auth-links -->
 
     <a href="{{route('findpass')}}">I forgot my password</a><br>

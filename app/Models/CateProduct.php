@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CateProduct extends Model
 {
-    protected $table='caregories_products';
+    protected $table='categories_products';
     protected $fillable = ['name','slug','parent_id'];
     public function products(){
-    	return $this->hasMany('App\Models\Product','cate_product_id','id');
+        return $this->hasMany('App\Models\Product','category_id','id');
     }
     public function cates()
     {

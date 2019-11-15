@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{asset('/client/bootstrap/css/bootstrap.min.css')}}">
-</head>
-<body>
+@extends('layouts.admin.main')
+
+@section('content')
     <form onsubmit="return formValidation()" action="{{isset($category) ?'/shop-men/admin/category/update'  : '/shop-men/admin/category/add'}}" method="post" enctype= "multipart/form-data">
         @csrf
         @if(isset($category))
             <input type="hidden" name="id" value="{{$category->id}}">
+            <h3>Sửa danh mục sản phẩm</h3>
+        @else
+            <h3>Thêm danh mục sản phẩm</h3>
         @endif
         <label for="">Tên danh mục</label>
         <input class="name_category" type="text" name="name" placeholder="Mời nhập tên " value="{{isset($category) ? $category->name : '' }}">
@@ -37,7 +33,11 @@
         <br>
         <button>GỬI</button>
     </form>
-    <script>
+@endsection
+
+@section('script')
+
+<script>
         const nameCategory = document.querySelector('.name_category');
         function formValidation(){
             if(nameCategory.value == ''){
@@ -47,5 +47,5 @@
             return true;
         }
     </script>
-</body>
-</html>
+
+@endsection

@@ -1,4 +1,4 @@
-@extends('layouts.home.main')    
+@extends('layouts.client.layout')   
 @section('title','trang chủ')
 
 @section('slide')

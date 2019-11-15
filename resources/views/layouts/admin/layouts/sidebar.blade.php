@@ -4,11 +4,11 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset('img/avatar.jpg')}}" class="img-circle" alt="User Image">
+          <img src="{{asset(isset(Auth::user()->avatar)?Auth::user()->avatar:'img/avatar.jpg')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Admin</p>
-          <p>admin@gmail.com</p>
+          <p>{{Auth::user()->email}}</p>
         </div>
       </div>
       <!-- search form -->
@@ -77,9 +77,22 @@
             </span>
           </a> 
           <ul class="treeview-menu">
-            <li><a href="/shop-men/admin/product">Tất cả sản phẩm</a></li>
+            <li><a href="{{route('show_product_admin')}}">Tất cả  sản phẩm</a></li>
             <li><a href="/shop-men/admin/product/add"> Thêm mới</a></li>
-            <li><a href="{{route('list.cate.product')}}">Danh mục</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-connectdevelop"></i>
+            <span>Danh mục sản phẩm </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a> 
+          <ul class="treeview-menu">
+            <li><a href="{{route('list.cate.product')}}">Tất cả danh mục sản phẩm</a></li>
+            <li><a href="{{route('get.cate.product')}}"> Thêm mới</a></li>
           </ul>
         </li>
         
@@ -112,7 +125,7 @@
           <ul class="treeview-menu">
            <li><a href="{{route('list.user')}}"> Tất cả thành viên</a></li>
             <li><a href="{{route('add.user')}}">Thêm mới</a></li>
-            <li><a href="{{route('add.user')}}">Thông tin cá nhân </a></li>
+            <li><a href="{{route('up.user',Auth::user()->id)}}">Thông tin cá nhân </a></li>
             
           </ul>
         </li>
@@ -121,8 +134,8 @@
         
        
         
-        <li class="treeview">
-          <a href="#">
+        <li >
+          <a href="{{route('list.setting')}}">
             <i class="fa fa-cog"></i> <span>Cài đặt giao diện</span>
           </a>
         </li>

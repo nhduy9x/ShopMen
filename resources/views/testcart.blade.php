@@ -6,7 +6,7 @@
 	<input type="submit" value="submit">
 </form>
 <table>
-	@foreach($cart as $all)
+	@foreach($carts as $all)
 	<th>
 		<tr>
 			{{$all->id}}
@@ -16,5 +16,5 @@
 		</tr>
 	</th>
 	@endforeach
-	{{$total}}
+	
 </table>

@@ -73,7 +73,20 @@ class ResetPasswordController extends Controller
     }
     public function rest($id){
         $user=User::Where('email',$id)->first();
+        $user->code=str::random(6);
+        $user->save();
+        $data=[
+            'code'=>$user->code,
+            'email'=>$user->email,
+            'hrel'=>route('rest.pass',$user->email),
+        ];
+        $subject='Xác nhận tài khoản!';
+        Mail::to($user->email)->send(new MailRestPassword($data,$subject));
         return view('auth.password.rest',compact('user'));
+    }
+    public function send($email){
+        $user=User::Where('email',$email)->first();
+        return redirect()->back();
     }
     public function postRest(Request $req,$id){
        $user=User::Where('email',$id)->first();

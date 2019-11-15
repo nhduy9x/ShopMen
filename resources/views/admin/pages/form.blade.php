@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')
 @php
-	$title = $page->id == null ? "Thêm bài viết" : "Sửa bài viết";
+	$title = $page->id == null ? "Thêm trang" : "Sửa trang";
 @endphp
 @section('title', $title)
 @section('page',$title)
@@ -76,7 +76,7 @@
     										
     									</span>
 
-    								</button> <a href="" class="btn btn-danger">Cancel</a>
+    								</button> <a href="{{route('list.page')}}" class="btn btn-danger">Cancel</a>
     							</div>
     						</div>
     					</div>

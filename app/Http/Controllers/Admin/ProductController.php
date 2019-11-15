@@ -5,13 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Attribute;
-use App\Models\AttributeSize;
 use App\Models\CateProduct;
-use App\Models\Image;
 use App\Models\Product_Property;
 use App\Models\Product_Size_Quan;
-use App\Http\Requests\ClassProductRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -19,8 +15,21 @@ use DB;
 class ProductController extends Controller
 {
     
-    public function show_all_product(){
-        $products = Product::all() ;
+    public function show_all_product_admin(){
+        $products = DB::table('products')->join('categories_products','categories_products.id', '=', 'products.category_id')->get(
+            array(
+                'products.id',
+                'products.name',
+                'products.img',
+                'products.price',
+                'products.source',
+                'products.slug',
+                'products.short_desc',
+                'products.description',
+                'categories_products.name'
+            )
+        );
+        
         return view('admin.product.products',
             [
                 'products' => $products
@@ -50,7 +59,7 @@ class ProductController extends Controller
         Product_Property::find($id)->update($dataUpdate);
         Product_Size_Quan::where('product_property_id','=',$id)->delete();
         Product_Size_Quan::insert($dataSizeQuan);
-        return redirect('/add-property/' .$productId);
+        return redirect(route('addcolor.product',$productId));
     }
 
     public function update_property($id){
@@ -95,7 +104,8 @@ class ProductController extends Controller
 
     public function add_property($id){
         $product = Product::find($id);
-        $dataSizeQuan    =  $product->join('product_properties','product_properties.product_id','=','products.id')->join('product_size_quans','product_size_quans.product_property_id','=','product_properties.id')->where('product_size_quans.product_id','=',$id)->get(array(
+        
+        $dataSizeQuan    =  $product->join('products_properties','products_properties.product_id','=','products.id')->join('products_size_quans','products_size_quans.product_property_id','=','products_properties.id')->where('products_size_quans.product_id','=',$id)->get(array(
             'color',
             'size',
             'quantity'
@@ -112,33 +122,38 @@ class ProductController extends Controller
     public function post_product_add(Request $request){
         $idmax = Product::all()->max('id') +1;
         $slug=Str::slug($request->name);
-        $data = $request->except('_token','uploadImg');
+        $data = $request->except('_token','uploadImg','category_parent','category_child');
+        if($request->category_child == null){
+            $data['category_id'] = $request->category_parent;
+        }else{
+            $data['category_id'] = $request->category_child;
+        }
         $file = $request->file('uploadImg');
+        
         $destinationPath = 'uploads';
         $file->move($destinationPath,$file->getClientOriginalName());
         $data['id'] =  $idmax ;
-        // dd($data);
         $data['slug']=$slug;
         Product::create($data);
         return redirect(route('addcolor.product',$idmax));
     }
 
     public function product_add(){
-        // $categoriesParent = Category::where('parent_id', '=', null)->get();
-        // $categoriesChild = Category::where('parent_id', '!=', null)->get(array(
-        //     'id',
-        //     'name',
-        //     'parent_id'
-        // ))->groupBy('parent_id');
-        // dd($categoriesChild);
-        return view('admin.product.product_add');
+        $categoriesParents = CateProduct::where('parent_id', '=', null)->get();
+        $categoriesChilds = CateProduct::where('parent_id', '!=', null)->get();
+        return view('admin.product.product_add',
+            [
+                'categoriesParents' => $categoriesParents,
+                'categoriesChilds' => $categoriesChilds
+            ]
+        );
     }
 
     public function product_detail($id){
         $product = Product::find($id);
         $productProperties = $product->product_propety()->get();
         
-        $dataSizeQuan    =  $product->join('products_properties','products_properties.product_id','=','products.id')->join('products_size_quan','products_size_quan.product_property_id','=','products_properties.id')->where('products_size_quan.product_id','=',$id)->get(array(
+        $dataSizeQuan    =  $product->join('products_properties','products_properties.product_id','=','products.id')->join('products_size_quans','products_size_quans.product_property_id','=','products_properties.id')->where('products_size_quans.product_id','=',$id)->get(array(
             'color',
             'size',
             'quantity'
@@ -153,4 +168,44 @@ class ProductController extends Controller
         );
     }
 
+    public function delete($id){
+        Product::find($id)->delete();
+        Product_Property::where('product_id','=',$id)->delete();
+        Product_Size_Quan::where('product_id','=',$id)->delete();
+        return redirect(route('show_product_admin'));
+    }
+
+    
+    public function edit($id){
+        $product =  Product::find($id) ;
+        $category =CateProduct::find($product->category_id);
+        $categoriesParents = CateProduct::where('parent_id', '=', null)->get();
+        $categoriesChilds = CateProduct::where('parent_id', '!=', null)->get();
+        return view('admin.product.product_add',[
+            'product' =>$product,
+            'category' => $category,
+            'categoriesParents' => $categoriesParents,
+            'categoriesChilds' => $categoriesChilds
+        ]);
+    }
+
+    public function update(Request $request){
+        $slug=Str::slug($request->name);
+        $data = $request->except('_token','id','uploadImg','category_parent','category_child');
+        
+        if($request->category_child == null){
+            $data['category_id'] = $request->category_parent;
+        }else{
+            $data['category_id'] = $request->category_child;
+        }
+        $file = $request->file('uploadImg');
+        if($file != null){
+            $destinationPath = 'uploads';
+            $file->move($destinationPath,$file->getClientOriginalName());
+        }
+        $data['slug']=$slug;
+        $product = Product::find($request->id);
+        $product->update($data);
+        return redirect(route('show_product_admin'));
+    }
 }

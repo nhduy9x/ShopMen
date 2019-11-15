@@ -1,7 +1,7 @@
 @extends('layouts.admin.main')
 
 @section('content')
-    <form onsubmit="return validateForm()" action="/shop-men/admin/product/update-property/{{$property['id']}}" method="post" enctype= "multipart/form-data">
+    <form onsubmit="return validateForm()" action="{{route('update_property_product',$property->id)}}" method="post" enctype= "multipart/form-data">
         @csrf
         <label for="">Màu</label>
         <input id="InColor" type="text" name="color" value ="{{$property['color']}}">

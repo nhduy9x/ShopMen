@@ -23,8 +23,8 @@ class PageController extends Controller
     }
     public function getup($id){
     	$page=Page::find($id);
-    	
-        return view('admin.page.form',compact('page'));
+    	// dd($page);
+        return view('admin.pages.form',compact('page'));
     }
     public function delete(page $class){
         $class->delete();
