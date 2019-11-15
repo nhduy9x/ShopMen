@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <ul class="list-inline list-breadcrumb">
                         <li class="list-inline-item">
-                            <a href="">Trang chủ</a>
+                            <a href="{{route('home')}}">Trang chủ</a>
                             <span class="span-brc">>></span>
                         </li>
                         <li class="list-inline-item">

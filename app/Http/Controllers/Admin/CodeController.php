@@ -17,7 +17,7 @@ class CodeController extends Controller
     		$code= new Discount_Code();
     		# code...
     	}
-    	
+
     	return view('admin.orders.code',compact('codes','code'));
     }
     public function save(CodeRequest $req){

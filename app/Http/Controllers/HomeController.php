@@ -11,6 +11,8 @@ use App\Models\Image;
 use App\Models\Page;
 use App\Models\Product_Property;
 use App\Models\Product_Size_Quan;
+use Darryldecode\Cart\CartCondition;
+use Auth;
 class HomeController extends Controller
 {
 	public function product_detail($slug){
@@ -35,6 +37,7 @@ class HomeController extends Controller
 
     public function product(){
     	$products=Product::paginate(9);
+        
     	return view('client.product',compact('products'));
     }
     public function check(){

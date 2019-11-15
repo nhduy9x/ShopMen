@@ -165,6 +165,7 @@
                         @else
                         <a href="{{route('ckeck.out')}}"><i class="fas fa-shopping-cart">(0)</i></a>
                         @endif
+                        
                         <i class="fas fa-search"></i>
                         <i class="fas fa-bars"></i>
                         <form action="" class="form-search">

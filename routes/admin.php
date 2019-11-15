@@ -80,9 +80,7 @@ Route::group(['prefix'=>'discount-code'],function(){
 	Route::post('save','Admin\CodeController@save')->name('save');
 });
 
-Route::get('don-hang', function () {
-    return view('admin.orders.list');
-})->name('donhang');
+Route::get('don-hang','Admin\OrderController@list')->name('donhang');
 
 
 

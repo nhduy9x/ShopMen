@@ -23,34 +23,7 @@ Route::get('dashboard', function () {
 Route::get('/product-detail/{slug}','HomeController@product_detail')->name('detail.product');
 Route::get('page/{slug}','HomeController@page')->name('page');
 
-// Route::group(['prefix'=>'shop-men/admin/product'],function(){
-//     Route::get('/','Admin\productController@show_all_product_admin')->name('show_product_admin');
-//     Route::get('/add','Admin\productController@product_add')->name('add_product');
-//     Route::post('/add','Admin\productController@post_product_add')->name('post_product');;
 
-//     Route::get('/add-property/{id}','Admin\productController@add_property')->name('addcolor.product');
-//     Route::post('/add-property','Admin\productController@post_add_property')->name('add_property_product');
-
-//     Route::get('/delete-property/{id}','Admin\productController@delete_property');
-//     Route::get('/update-property/{id}','Admin\productController@update_property');
-//     Route::post('/update-property/{id}','Admin\productController@upsizequan')->name('update_property_product');
-	
-// 	Route::get('/delete/{id}','Admin\productController@delete')->name('delete.product');
-// 	Route::get('/edit/{id}','Admin\productController@edit')->name('edit.product');
-// 	Route::post('/edit','Admin\productController@update')->name('update.product');
-// });
-
-// Route::group(['prefix'=>'shop-men/admin/category'],function(){
-// 	Route::get('/','Admin\CateProductController@show_all_product')->name('list.cate.product');
-
-//     Route::get('/add','Admin\CateProductController@form_add')->name('get.cate.product');
-//     Route::post('/add','Admin\CateProductController@post_add');
-    
-//     Route::get('/edit/{id}','Admin\CateProductController@form_update')->name('up.cate.product');
-//     Route::post('/update','Admin\CateProductController@post_update');
-
-// 	Route::get('/delete/{id}','Admin\CateProductController@delete')->name('delete.cate.product');
-// });
 
 
 
